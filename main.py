@@ -1,9 +1,9 @@
 import brewtools
 import pysam 
 
-class __init__(self):
+class Main(self):
 	self.ref_genome = refGenome
-	self.bamfile =bamfile 
+	self.bamfile = bamfile 
 
 	def GenCoverage(self):
 		posbp_read = {}
