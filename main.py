@@ -1,5 +1,6 @@
 import brewtools
 import pysam 
+import matplotlib 
 
 class Main(self):
 	self.ref_genome = refGenome
