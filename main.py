@@ -1,7 +1,7 @@
 
 import pysam 
 import matplotlib.pyplot as plt
-from sequenceAnalysis import fastAreader 
+from sequenceAnalysis import FastAreader 
 
 class Main(self):
 	self.ref_genome = refGenome
@@ -45,7 +45,7 @@ class Main(self):
 
 	def main(self):
 		bamfile = pysam.AlignmentFile("alignment_1.bam", "rb")
-		refGenome = fastAreader(GCA_009858895.3.fasta)
+		refGenome = FastAreader(GCA_009858895.3.fasta)
 	
 
 
