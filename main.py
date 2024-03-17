@@ -1,4 +1,4 @@
-import brewtools
+
 import pysam 
 import matplotlib.pyplot as plt
 import fastAreader
