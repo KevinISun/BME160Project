@@ -31,17 +31,17 @@ class Main(self):
 		''' Generates a histogram graph of the depth of the genome. ''' 
 	
 		# Plotting a basic histogram
-        		plt.hist(i, readCount, bins=100, color='skyblue', edgecolor='black')
+		plt.hist(i, readCount, bins=100, color='skyblue', edgecolor='black')
  
 		# Labels the x-axis as the nucleotide position
-        		plt.xlabel('Nucleotide Position')
+		plt.xlabel('Nucleotide Position')
 		# Labels the y-axis as the number of reads in that position
-       		plt.ylabel('Number of Reads')
+		plt.ylabel('Number of Reads')
 		# Labels the histogram with the title
-        		plt.title('Read Depth of Genome')
+		plt.title('Read Depth of Genome')
  
-        		# Display the plot
-        		plt.show()
+		# Display the plot
+		plt.show()
 
 	def main(self):
 		bamfile = pysam.AlignmentFile("alignment_1.bam", "rb")
