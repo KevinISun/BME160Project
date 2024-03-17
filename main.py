@@ -29,9 +29,14 @@ class Main(self):
 
 	def GenHistogram(self):
 		''' Generates a histogram graph of the depth of the genome. ''' 
-	
+		# Defines x as the dictionary keys 
+		x = posbp_read.keys()
+		# Defines y as the dictionary values 
+		y = posbp_read.values()
+		# Defines the legend 
+		legend_key = ['distribution of the reads in the genome']
 		# Plotting a basic histogram
-		plt.hist(i, readCount, bins=100, color='skyblue', edgecolor='black')
+		plt.hist(x, y, bins=100, color='skyblue', edgecolor='black')
  
 		# Labels the x-axis as the nucleotide position
 		plt.xlabel('Nucleotide Position')
@@ -39,6 +44,8 @@ class Main(self):
 		plt.ylabel('Number of Reads')
 		# Labels the histogram with the title
 		plt.title('Read Depth of Genome')
+		# Adds the legend to the histogram
+		plt.legend(legend_key)
  
 		# Display the plot
 		plt.show()
