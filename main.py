@@ -3,7 +3,7 @@ import pysam
 import matplotlib.pyplot as plt
 from sequenceAnalysis import FastAreader 
 
-class Main(self):
+class Main():
 	self.ref_genome = refGenome
 	self.bamfile = bamfile 
 
