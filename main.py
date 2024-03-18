@@ -37,6 +37,13 @@ class Main(self):
 		legend_key = ['distribution of the reads in the genome']
 		# Plotting a basic histogram
 		plt.hist(x, y, bins=100, color='skyblue', edgecolor='black')
+ 		# Setting color
+		fracs = ((N**(1 / 5)) / N.max())
+		norm = colors.Normalize(fracs.min(), fracs.max())
+ 
+		for thisfrac, thispatch in zip(fracs, patches):
+    			color = plt.cm.viridis(norm(thisfrac))
+    			thispatch.set_facecolor(color)
  
 		# Labels the x-axis as the nucleotide position
 		plt.xlabel('Nucleotide Position')
