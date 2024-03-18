@@ -6,12 +6,12 @@ from sequenceAnalysis import FastAreader
 class depthGraphGenerator():
 
 
-	def GenCoverage(self, ref_genome, bamfile):
+	def GenCoverage(self, refgenome, bamfile):
 		''' Generates the coverage of the genome. '''
 		# Initializes dictionary for the storage of the nucleotide position from the reference and the number of reads aligned in that position
 		posbp_read = {}
 		# For loop iterates through each nucleotide position in the reference genome 
-		for i in range(1, len(ref_genome)+1):
+		for i in range(1, len(refgenome)+1):
 			# Initializes the readCount of the reference genome
 			readCount = 0
 			# For loop iterates through the .bam file to find the number of reads 
@@ -24,7 +24,7 @@ class depthGraphGenerator():
 			bamfile.close()
 			
 		#calculates the coverage of the genome
-		coverage = readCount/(len(ref_genome))
+		coverage = readCount/(len(refgenome))
 		
 		return coverage
 
