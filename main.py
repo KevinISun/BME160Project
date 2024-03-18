@@ -28,7 +28,7 @@ class depthGraphGenerator():
 		
 		return coverage
 
-	def GenHistogram(self):
+	def GenHistogram(self, posbp_read, N, patches):
 		''' Generates a histogram graph of the depth of the genome. ''' 
 		# Defines x as the dictionary keys 
 		x = posbp_read.keys()
@@ -40,6 +40,8 @@ class depthGraphGenerator():
 		plt.hist(x, y, bins=100, color='skyblue', edgecolor='black')
  		# Setting color
 		fracs = ((N**(1 / 5)) / N.max())
+
+		# Normalize the data to 0-1
 		norm = colors.Normalize(fracs.min(), fracs.max())
  
 		for thisfrac, thispatch in zip(fracs, patches):
@@ -64,3 +66,9 @@ if __name__ == '__main__':
 	bamfile = pysam.AlignmentFile('alignment_1.bam', "rb")
 	refGenome = FastAreader('GCA_009858895.3.fasta')
 	depthGraph = depthGraphGenerator()
+	coverage = depthGraph.GenCoverage(refGenome, bamfile)
+	print(coverage)
+	posbp_read = depthGraph.posbp_read
+	depthGraph.GenHistogram(posbp_read, N, patches)
+
+	
