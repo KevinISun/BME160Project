@@ -58,8 +58,8 @@ class Main(self):
 		plt.show()
 
 	def main(self):
-		bamfile = pysam.AlignmentFile("alignment_1.bam", "rb")
-		refGenome = FastAreader(GCA_009858895.3.fasta)
+		bamfile = pysam.AlignmentFile('alignment_1.bam', "rb")
+		refGenome = FastAreader('GCA_009858895.3.fasta')
 	
 
 
