@@ -5,13 +5,22 @@ from sequenceAnalysis import FastAreader
 
 class depthGraphGenerator():
 
+	# Constructor
+	def __init__(self):
+		self.posbp_read = {}
 
-	def GenCoverage(self, refgenome, bamfile):
+	# Method to get posbp_read
+	def getPosbpRead(self):
+		return self.posbp_read
+
+
+
+	def GenCoverage(self, bamfile, refgenome_header, refgenome_sequence):
 		''' Generates the coverage of the genome. '''
 		# Initializes dictionary for the storage of the nucleotide position from the reference and the number of reads aligned in that position
-		posbp_read = {}
+		self.posbp_read = {}
 		# For loop iterates through each nucleotide position in the reference genome 
-		for i in range(1, len(refgenome)+1):
+		for i in range(1, len(refgenome_sequence)+1):
 			# Initializes the readCount of the reference genome
 			readCount = 0
 			# For loop iterates through the .bam file to find the number of reads 
@@ -20,20 +29,25 @@ class depthGraphGenerator():
 				readCount += 1
 				# Creates a dictionary that stores the nucleotide position from the reference genome as the key 
 				# and the number of reads aligned in that position as the value
-				posbp_read[i] = readCount
-			bamfile.close()
-			
+				self.posbp_read[i] = readCount			
 		#calculates the coverage of the genome
-		coverage = readCount/(len(refgenome))
+		coverage = readCount/(len(refgenome_sequence))
 		
 		return coverage
 
 	def GenHistogram(self, posbp_read, N, patches):
 		''' Generates a histogram graph of the depth of the genome. ''' 
+		'''
+		Parameters:
+		posbp_read (dict): A dictionary that stores the nucleotide position from the reference genome as the key
+		and the number of reads aligned in that position as the value
+		N (int): The number of reads aligned in that position
+		patches (int): The number of patches
+		'''
 		# Defines x as the dictionary keys 
 		x = posbp_read.keys()
 		# Defines y as the dictionary values 
-		y = posbp_read.values()
+		y = [posbp_read[key] for key in x]
 		# Defines the legend 
 		legend_key = ['distribution of the reads in the genome']
 		# Plotting a basic histogram
@@ -45,8 +59,8 @@ class depthGraphGenerator():
 		norm = colors.Normalize(fracs.min(), fracs.max())
  
 		for thisfrac, thispatch in zip(fracs, patches):
-    			color = plt.cm.viridis(norm(thisfrac))
-    			thispatch.set_facecolor(color)
+			color = plt.cm.viridis(norm(thisfrac))
+			thispatch.set_facecolor(color)
  
 		# Labels the x-axis as the nucleotide position
 		plt.xlabel('Nucleotide Position')
@@ -64,11 +78,14 @@ class depthGraphGenerator():
 
 if __name__ == '__main__':
 	bamfile = pysam.AlignmentFile('alignment_1.bam', "rb")
-	refGenome = FastAreader('GCA_009858895.3.fasta')
+	refGenomeFile = FastAreader('GCA_009858895.3.fasta')
 	depthGraph = depthGraphGenerator()
-	coverage = depthGraphGenerator.GenCoverage(refGenome, bamfile)
+	refGenome_header, refGenome_sequence = refGenomeFile.readFasta()
+	coverage = depthGraphGenerator.GenCoverage(bamfile, refGenome_header, refGenome_sequence)
+	bamfile.close()
 	print(coverage)
-	posbp_read = depthGraphGenerator.posbp_read
+
+	posbp_read = depthGraphGenerator.getPosbpRead()
 	depthGraphGenerator.GenHistogram(posbp_read, N, patches)
 
 	
