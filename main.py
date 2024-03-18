@@ -3,11 +3,10 @@ import pysam
 import matplotlib.pyplot as plt
 from sequenceAnalysis import FastAreader 
 
-class Main():
-	self.ref_genome = refGenome
-	self.bamfile = bamfile 
+class depthGraphGenerator():
 
-	def GenCoverage(self):
+
+	def GenCoverage(self, ref_genome, bamfile):
 		''' Generates the coverage of the genome. '''
 		# Initializes dictionary for the storage of the nucleotide position from the reference and the number of reads aligned in that position
 		posbp_read = {}
@@ -26,6 +25,8 @@ class Main():
 			
 		#calculates the coverage of the genome
 		coverage = readCount/(len(ref_genome))
+		
+		return coverage
 
 	def GenHistogram(self):
 		''' Generates a histogram graph of the depth of the genome. ''' 
@@ -56,10 +57,10 @@ class Main():
  
 		# Display the plot
 		plt.show()
-
-	def main(self):
-		bamfile = pysam.AlignmentFile('alignment_1.bam', "rb")
-		refGenome = FastAreader('GCA_009858895.3.fasta')
+	
 	
 
-
+if __name__ == '__main__':
+	bamfile = pysam.AlignmentFile('alignment_1.bam', "rb")
+	refGenome = FastAreader('GCA_009858895.3.fasta')
+	depthGraph = depthGraphGenerator()
