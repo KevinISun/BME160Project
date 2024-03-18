@@ -66,9 +66,9 @@ if __name__ == '__main__':
 	bamfile = pysam.AlignmentFile('alignment_1.bam', "rb")
 	refGenome = FastAreader('GCA_009858895.3.fasta')
 	depthGraph = depthGraphGenerator()
-	coverage = depthGraph.GenCoverage(refGenome, bamfile)
+	coverage = depthGraphGenerator.GenCoverage(refGenome, bamfile)
 	print(coverage)
-	posbp_read = depthGraph.posbp_read
-	depthGraph.GenHistogram(posbp_read, N, patches)
+	posbp_read = depthGraphGenerator.posbp_read
+	depthGraphGenerator.GenHistogram(posbp_read, N, patches)
 
 	
