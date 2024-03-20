@@ -1,6 +1,0 @@
-hi 
-
-Ues an assembler to align the genome
-HAVE to align the reads to the genome. 
-
-Genome:
