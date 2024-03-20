@@ -158,6 +158,8 @@ def generate_depth_graph(bam_file, output_png, normalize=False, depth_cut_off=20
     Args:
         bam_file (str): Path to the input BAM file.
         output_png (str): Path to the output PNG file.
+        normalize (bool): If True, normalize the depth by the largest depth (default=False).
+        depth_cut_off (int): Plot a line to represent a targeted depth (default=20).
     """
     # Estimate genome length
     genome_length = estimate_genome_length(bam_file)
