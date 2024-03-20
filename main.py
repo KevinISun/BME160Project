@@ -151,7 +151,7 @@ def plot_depth(depth_file_path, output_file_name, plot_title, genome_size, norma
     plt.close()
 
 
-def generate_depth_graph(bam_file, output_png):
+def generate_depth_graph(bam_file, output_png, normalize=False, depth_cut_off=20):
     """
     Generate depth graph from a BAM file.
 
@@ -169,7 +169,7 @@ def generate_depth_graph(bam_file, output_png):
     depth = calculate_depth(bam_file)
     
     # Plot depth graph
-    plot_depth('temp_depth_file.depth', output_png, f"Genome Depth for {bam_file}" , genome_length, False, 20)
+    plot_depth('temp_depth_file.depth', output_png, f"Genome Depth for {bam_file}" , genome_length, normalize, depth_cut_off)
     
     # Remove temporary depth file
     os.remove('temp_depth_file.depth')
