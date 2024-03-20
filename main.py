@@ -1,8 +1,6 @@
 import os
-import sys
-import seaborn as sns
 import pysam
-from matplotlib import pyplot as plt, lines
+from matplotlib import pyplot as plt
 import argparse
 
 def estimate_genome_length(bam_file):
@@ -110,45 +108,48 @@ def parse_depth(depth_input, genome_size):
     with open(depth_input) as depth_object:
         for row in depth_object:
             genome_id, position, depth_count = row.split()
-
             references.add(genome_id)
-
-            if len(references) > 1:
-                raise Exception(' This script only handles one genome - contig.')
-
             depth[int(position)] = int(depth_count)
 
     return depth
 
-def plot_depth(depth_report, output_name, plot_title, genome_size, normalize=False, depth_cut_off=20):
+import os
+from matplotlib import pyplot as plt, lines
+
+def plot_depth(depth_file_path, output_file_name, plot_title, genome_size, normalize=False, depth_cut_off=20):
     """
-    Plot genome depth across the genome.
+    Plot genome depth across the genome using Matplotlib.
 
     Args:
-        depth_report (str): Path to depth file.
-        output_name (str): Path to output PNG image.
+        depth_file_path (str): Path to depth file.
+        output_file_name (str): Path to output PNG image.
         plot_title (str): Plot title.
         genome_size (int): Size of the genome.
-        normalize (bool): If True, normalizes the depth by the largest depth (default=False).
+        normalize (bool): If True, normalize the depth by the largest depth (default=False).
         depth_cut_off (int): Plot a line to represent a targeted depth (default=20).
     """
-    data = parse_depth(depth_report, genome_size)
+    data = parse_depth(depth_file_path, genome_size)
+    y_label = "Depth"
 
-    y_label = "Normalized Depth" if normalize else "Depth"
-    data = [xx / max(data) for xx in data] if normalize else data
+    if normalize:
+        plot_title += " (Normalized)"
+        y_label = "Normalized Depth"
+        data = [xx / max(data) for xx in data]
 
-    sns.set(color_codes=True)
+    plt.figure()
     plt.title(plot_title)
-    ax = plt.subplot(111)
+    
+    plt.plot(range(len(data)), data)
 
-    sns_plot = sns.lineplot(x=range(len(data)), y=data)
-    sns_plot.set(xlabel='Genome Position (bp)', ylabel=y_label)
+    plt.xlabel('Genome Position (bp)')
+    plt.ylabel(y_label)
 
     if not normalize:
-        ax.add_line(lines.Line2D([0, genome_size + 1], [depth_cut_off], color="r"))
+        plt.axhline(y=depth_cut_off, color="r")
 
-    plt.savefig(output_name, bbox_inches='tight', dpi=400)
+    plt.savefig(output_file_name, dpi=400)
     plt.close()
+
 
 def generate_depth_graph(bam_file, output_png):
     """
@@ -178,11 +179,12 @@ def main():
     parser = argparse.ArgumentParser(description="Generate depth graph from a BAM file")
     parser.add_argument("-i", "--input", help="Input BAM file", required=True)
     parser.add_argument("-o", "--output", help="Output PNG file", required=True)
+    parser.add_argument("-n", "--normalize", action="store_true", help="Normalize the depth")
+    parser.add_argument("-c", "--depth_cutoff", type=int, help="Depth cutoff for the red line")
     args = parser.parse_args()
     
     # Call generate_depth_graph function with command-line arguments
-    generate_depth_graph(args.input, args.output)
-
+    generate_depth_graph(args.input, args.output, args.normalize, args.depth_cutoff)
 
 if __name__ == "__main__":
     main()
