@@ -1,8 +1,8 @@
-#BAM Depth Plotter
-##Overview
+# BAM Depth Plotter
+## Overview
 
 BAM Depth Plotter is a Python script that generates depth plots from BAM files, visualizing the depth of coverage across the genome. It utilizes the pysam library to parse BAM files and matplotlib to create the plots.
-##Features
+## Features
 
     Estimate genome length from a BAM file.
     Generate depth file from a BAM file.
@@ -13,9 +13,9 @@ BAM Depth Plotter is a Python script that generates depth plots from BAM files, 
     Specify a depth cutoff for visualization.
     Command-line interface for easy execution.
 
-##Usage
+## Usage
 Run the script with the following command:
-python main.py -i input.bam -o output.png
+`python main.py -i input.bam -o output.png`
 
 Replace input.bam with the path to your input BAM file and output.png with the desired output PNG file.
 Optional Arguments
@@ -27,5 +27,5 @@ Optional Arguments
 
 Example with optional arguments:
 
-python main.py -i input.bam -o output.png -n -c 30
+`python main.py -i input.bam -o output.png -n -c 30`
 
